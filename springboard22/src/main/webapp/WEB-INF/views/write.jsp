@@ -6,25 +6,30 @@
 <title>게시글 작성</title>
 <%@ include file="../views/include/header.jsp" %>
 <script>
-    $(document).ready(function(){
-        $("#btnSave").click(function(){
+    $(document).ready(function()
+    {
+        $("#btnSave").click(function()
+        {
             //var title = document.form1.title.value; ==> name속성으로 처리할 경우
             //var content = document.form1.content.value;
             //var writer = document.form1.writer.value;
             var title = $("#title").val();
             var content = $("#content").val();
             var writer = $("#writer").val();
-            if(title == ""){
+            if(title == "")
+            {
                 alert("제목을 입력하세요");
                 document.form1.title.focus();
                 return;
             }
-            if(content == ""){
+            if(content == "")
+            {
                 alert("내용을 입력하세요");
                 document.form1.content.focus();
                 return;
             }
-            if(writer == ""){
+            if(writer == "")
+            {
                 alert("이름을 입력하세요");
                 document.form1.writer.focus();
                 return;

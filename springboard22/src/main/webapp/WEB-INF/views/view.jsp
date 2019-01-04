@@ -6,15 +6,19 @@
 <title>게시글 작성</title>
 <%@ include file="../views/include/header.jsp" %>
 <script>
-    $(document).ready(function(){
-        $("#btnDelete").click(function(){
-            if(confirm("삭제하시겠습니까?")){
+    $(document).ready(function()
+    {
+        $("#btnDelete").click(function()
+        {
+            if(confirm("삭제하시겠습니까?"))
+            {
                 document.form1.action = "${path}/board/delete.do";
                 document.form1.submit();
             }
         });
         
-        $("#btnUpdete").click(function(){
+        $("#btnUpdete").click(function()
+        {
             //var title = document.form1.title.value; ==> name속성으로 처리할 경우
             //var content = document.form1.content.value;
             //var writer = document.form1.writer.value;
