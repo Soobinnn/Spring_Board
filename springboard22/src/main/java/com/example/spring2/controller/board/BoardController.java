@@ -1,36 +1,67 @@
 package com.example.spring2.controller.board;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.example.spring2.model.board.dto.BoardVO;
 import com.example.spring2.service.board.BoardService;
+
 @Controller    // 현재 클래스를 컨트롤러 빈(bean)으로 등록
 @RequestMapping("/board/*")
 public class BoardController 
-{
-    
+{   
     // 의존관계 주입 => BoardServiceImpl 생성
     // IoC 의존관계 역전
     @Inject
-    BoardService boardService;
+    BoardService boardService;  
     
     // 01. 게시글 목록
-    @RequestMapping("list.do")
+    /*@RequestMapping("list.do")
     public ModelAndView list() throws Exception
     {
         List<BoardVO> list = boardService.listAll();
         // ModelAndView - 모델과 뷰
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("list"); // 뷰를 list.jsp로 설정
         mav.addObject("list", list); // 데이터를 저장
+        mav.setViewName("list"); // 뷰를 list.jsp로 설정
         return mav; // list.jsp로 List가 전달된다.
+    }*/
+  
+    // 01. 게시글 목록 + 검색추가
+    @RequestMapping("list.do")
+    public ModelAndView list(@RequestParam(defaultValue="title") String searchOption,@RequestParam(defaultValue="") String keyword) throws Exception
+    {
+    		List<BoardVO> list = boardService.listAll(searchOption, keyword);
+    		// 레코드의 갯수
+    		int count = boardService.countArticle(searchOption, keyword);
+    		
+    		// ModelAndView - 모델과 뷰
+    		ModelAndView mav = new ModelAndView();
+    		
+    		/*mav.addObject("list", list); // 데이터를 저장
+			mav.addObject("count", count);
+			mav.addObject("searchOption", searchOption);
+			mav.addObject("keyword", keyword);*/
+    		// 데이터를 맵에 저장
+    			Map<String, Object> map = new HashMap<String, Object>();
+    			map.put("list", list); // list
+    			map.put("count", count); // 레코드의 갯수
+    			map.put("searchOption", searchOption); // 검색옵션
+    			map.put("keyword", keyword); // 검색키워드
+    			mav.addObject("map", map); // 맵에 저장된 데이터를 mav에 저장
+    			mav.setViewName("list"); // 뷰를 list.jsp로 설정
+    			return mav; // list.jsp로 List가 전달된다.
     }
     
     // 02_01. 게시글 작성화면
@@ -46,7 +77,7 @@ public class BoardController
     @RequestMapping(value="insert.do", method=RequestMethod.POST)
     public String insert(@ModelAttribute BoardVO vo) throws Exception
     {
-        boardService.create(vo);
+        boardService.insert(vo);
         return "redirect:list.do";
     }
     
@@ -63,7 +94,7 @@ public class BoardController
         // 뷰의 이름
         mav.setViewName("view");
         // 뷰에 전달할 데이터
-        mav.addObject("dto", boardService.read(bno));
+        mav.addObject("dto", boardService.view(bno));
         return mav;
     }
     
@@ -72,7 +103,7 @@ public class BoardController
     @RequestMapping(value="update.do", method=RequestMethod.POST)
     public String update(@ModelAttribute BoardVO vo) throws Exception
     {
-        boardService.update(vo);
+        boardService.updateArticle(vo);
         return "redirect:list.do";
     }
     
@@ -80,7 +111,7 @@ public class BoardController
     @RequestMapping("delete.do")
     public String delete(@RequestParam int bno) throws Exception
     {
-        boardService.delete(bno);
+        boardService.deleteArticle(bno);
         return "redirect:list.do";
     }
     
