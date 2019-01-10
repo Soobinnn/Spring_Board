@@ -46,6 +46,10 @@ public class MemberDAOImpl implements MemberDAO
    @Override
    public void updateMember(MemberVO vo) 
    {
+	   System.out.println(vo.getUserPw());
+	   System.out.println(vo.getUserId());
+	   System.out.println(vo.getUserName());
+	   System.out.println(vo.getUserEmail());
        sqlSession.update("member.updateMember", vo);
    }
 

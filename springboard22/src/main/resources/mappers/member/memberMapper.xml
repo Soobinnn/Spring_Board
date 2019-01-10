@@ -37,8 +37,7 @@
         SET
             user_pw = #{userPw},
             user_name = #{userName},
-            user_email = #{userEmail},
-            user_updatedate = SYSDATE
+            user_updatedate = SYSDATE+9/24
         WHERE
             user_id = #{userId}    
     </update>
