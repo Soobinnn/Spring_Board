@@ -27,6 +27,11 @@
                 <td><input name="userId" value="${dto.userId}" readonly="readonly"></td>
             </tr>
             <tr>
+                <td>이메일</td>
+                 <!-- id는 수정이 불가능하도록 readonly속성 추가 -->
+                <td><input name="userEmail" value="${dto.userEmail}"></td>
+            </tr>
+            <tr>
                 <td>비밀번호</td>
                 <td><input type="password" name="userPw"></td>
             </tr>
