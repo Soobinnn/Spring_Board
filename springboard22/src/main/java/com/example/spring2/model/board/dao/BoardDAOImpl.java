@@ -32,7 +32,8 @@ public class BoardDAOImpl implements BoardDAO
 	   Map<String, String> map = new HashMap<String, String>();
 	   map.put("searchOption", searchOption);
 	   map.put("keyword", keyword);
-	   return SqlSession.selectList("board.listAll", map);
+	   
+	   return SqlSession.selectList("board.listAll", map);// vo
    }
    // 02. 게시글 작성
    @Override

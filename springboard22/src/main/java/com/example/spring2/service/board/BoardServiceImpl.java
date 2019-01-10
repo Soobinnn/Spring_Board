@@ -101,7 +101,8 @@ public class BoardServiceImpl implements BoardService
 
     // 07. 게시글 레코드 갯수 boardDao.countArticle메서드 
     @Override
-    public int countArticle(String searchOption, String keyword) throws Exception {
+    public int countArticle(String searchOption, String keyword) throws Exception 
+    {
         return boardDao.countArticle(searchOption, keyword);
     }
     

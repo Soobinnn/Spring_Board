@@ -42,7 +42,7 @@ public class BoardController
     @RequestMapping("list.do")
     public ModelAndView list(@RequestParam(defaultValue="title") String searchOption,@RequestParam(defaultValue="") String keyword) throws Exception
     {
-    		List<BoardVO> list = boardService.listAll(searchOption, keyword);
+    		List<BoardVO> list = boardService.listAll(searchOption, keyword); //
     		// 레코드의 갯수
     		int count = boardService.countArticle(searchOption, keyword);
     		
@@ -77,6 +77,7 @@ public class BoardController
     @RequestMapping(value="insert.do", method=RequestMethod.POST)
     public String insert(@ModelAttribute BoardVO vo) throws Exception
     {
+    	System.out.println(vo.getRegdate());
         boardService.insert(vo);
         return "redirect:list.do";
     }

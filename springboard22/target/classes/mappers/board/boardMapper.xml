@@ -17,7 +17,7 @@
             regdate desc
     </select> -->
     
-    <!-- 01_01. 게시글 전체목록 조회 및 검색 조회까지 -->
+    <!-- 01. 게시글 전체목록 조회 및 검색 조회까지 -->
 	<select id="listAll" resultType="BoardVO">
     	SELECT bno, title, content, writer, regdate, viewcnt 
     	FROM tbl_board
@@ -77,9 +77,9 @@
     	<choose>
        	 <!-- 검색옵션이 전체 검색일 경우 -->
         	<when test="searchOption == 'all'">
-           	 WHERE writer like '%'||#{keyword}||'%'
-           	 OR content like '%'||#{keyword}||'%'
-          	  OR title like '%'||#{keyword}||'%'
+           	 	WHERE writer like '%'||#{keyword}||'%'
+           		OR content like '%'||#{keyword}||'%'
+          	  	OR title like '%'||#{keyword}||'%'
         	</when>
         	<!-- 전체 검색이 아닐 경우 -->
         	<otherwise>
