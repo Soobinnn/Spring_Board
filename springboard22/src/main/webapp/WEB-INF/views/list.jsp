@@ -43,7 +43,7 @@ ${map.count}개의 게시물이 있습니다.
         <th>작성일</th>
         <th>조회수</th>
     </tr>
-<%--     <c:forEach var="row" items="${list}"> --%>
+<%-- <c:forEach var="row" items="${list}"> --%>
     <c:forEach var="row" items="${map.list}">
     <tr>
         <td>${row.bno}</td>

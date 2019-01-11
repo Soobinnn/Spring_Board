@@ -4,6 +4,7 @@ package com.example.spring2.controller.member;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.spring2.model.member.dto.MemberVO;
 import com.example.spring2.service.member.MemberService;
@@ -19,7 +21,9 @@ import com.example.spring2.service.member.MemberService;
 @Controller // 현재의 클래스를 controller bean에 등록시킴
 public class MemberController 
 {
+	//로깅
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
    // MemberService 객체를 스프링에서 생성하여 주입시킴
    @Inject
    MemberService memberService;
@@ -113,5 +117,46 @@ public class MemberController
            model.addAttribute("dto", memberService.viewMember(userId));
            return "member_view";
        }
+   }
+   
+   // 06. 로그인 화면 
+   @RequestMapping("member/login.do")
+   public String login()
+   {
+       return "login";    // views/member/login.jsp로 포워드
+   }
+   
+   // 07. 로그인 처리
+   @RequestMapping("member/loginCheck.do")
+   public ModelAndView loginCheck(@ModelAttribute MemberVO vo, HttpSession session)
+   {
+       boolean result = memberService.loginCheck(vo, session);
+       ModelAndView mav = new ModelAndView();
+       if (result == true) 
+       { // 로그인 성공
+           // main.jsp로 이동
+           mav.setViewName("home");
+           mav.addObject("msg", "success");
+       } 
+       else 
+       {
+    	   // 로그인 실패
+           // login.jsp로 이동
+           mav.setViewName("login");
+           mav.addObject("msg", "failure");
+       }
+       
+       return mav;
+   }
+   
+   // 08. 로그아웃 처리
+   @RequestMapping("member/logout.do")
+   public ModelAndView logout(HttpSession session)
+   {
+       memberService.logout(session);
+       ModelAndView mav = new ModelAndView();
+       mav.setViewName("login");
+       mav.addObject("msg", "logout");
+       return mav;
    }
 }

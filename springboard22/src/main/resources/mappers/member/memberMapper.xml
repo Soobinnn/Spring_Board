@@ -54,4 +54,21 @@
         FROM tbl_member
         WHERE user_id = #{userId} AND user_pw = #{userPw}
     </select>
+    
+    <!-- 07. 로그인 -->
+      <select id="loginCheck" resultType="String">
+        SELECT user_name AS userName FROM tbl_member
+        WHERE user_id = #{userId} AND user_pw = #{userPw}
+    </select>
+    
+    <!-- 08. 로그인정보  -->
+    <select id="viewlogin" resultType="MemberVO">
+        SELECT 
+            user_name AS userName,
+            user_id AS userId,
+            user_email AS userEmail,
+            user_regdate AS userRegdate
+        FROM tbl_member
+        WHERE user_id = #{userId} AND user_pw = #{userPw}
+    </select>
 </mapper>

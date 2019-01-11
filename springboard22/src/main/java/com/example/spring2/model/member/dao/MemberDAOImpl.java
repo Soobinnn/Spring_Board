@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -74,6 +75,25 @@ public class MemberDAOImpl implements MemberDAO
        int count = sqlSession.selectOne("member.checkPw", map);
        if(count == 1) result= true;
        return result;
+   }
+   
+   // 07. 회원 로그인체크
+   @Override
+   public boolean loginCheck(MemberVO vo) 
+   {
+       String name = sqlSession.selectOne("member.loginCheck", vo);
+       return (name == null) ? false : true;
+   }
+   // 08. 회원 로그인 정보
+   @Override
+   public MemberVO viewlogin(MemberVO vo) 
+   {
+       return sqlSession.selectOne("member.viewlogin", vo);
+   }
+   // 09. 회원 로그아웃
+   @Override
+   public void logout(HttpSession sessin) 
+   {
    }
    
 }
