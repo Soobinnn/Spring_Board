@@ -8,9 +8,10 @@ public class BoardVO
     private int bno;            // 게시글 번호
     private String title;       // 게시글 제목
     private String content;     // 게시글 내용
-    private String writer;      // 게시글 작성자
+    private String writer;     // 게시글 ID
     private Date regdate;       // 게시글 작성일자 util.Date
     private int viewcnt;        // 게시글 조회수
+    private String userName;    // 게시글 작성자
     
     // Getter/Setter
     public int getBno() {
@@ -49,12 +50,19 @@ public class BoardVO
     public void setViewcnt(int viewcnt) {
         this.viewcnt = viewcnt;
     }
-    // toString()
+    
+    public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	// toString()
     @Override
     public String toString() 
     {
         return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
-                + regdate + ", viewcnt=" + viewcnt + "]";
+                + regdate + ", viewcnt=" + viewcnt + ", userName= " + userName  + "]";
     }
     
 }

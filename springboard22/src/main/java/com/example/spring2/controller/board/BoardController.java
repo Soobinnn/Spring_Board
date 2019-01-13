@@ -74,10 +74,20 @@ public class BoardController
     }
     
     // 02_02. 게시글 작성처리
-    @RequestMapping(value="insert.do", method=RequestMethod.POST)
+ /*   @RequestMapping(value="insert.do", method=RequestMethod.POST)
     public String insert(@ModelAttribute BoardVO vo) throws Exception
     {
     	System.out.println(vo.getRegdate());
+        boardService.insert(vo);
+        return "redirect:list.do";
+    }*/
+    @RequestMapping(value="insert.do", method=RequestMethod.POST)
+    public String insert(@ModelAttribute BoardVO vo, HttpSession session) throws Exception
+    {
+        // session에 저장된 userId를 writer에 저장
+        String writer = (String) session.getAttribute("userId");
+        // vo에 writer를 세팅
+        vo.setWriter(writer);
         boardService.insert(vo);
         return "redirect:list.do";
     }
@@ -98,6 +108,8 @@ public class BoardController
         mav.addObject("dto", boardService.view(bno));
         return mav;
     }
+   
+
     
     // 04. 게시글 수정
     // 폼에서 입력한 내용들은 @ModelAttribute BoardVO vo로 전달됨

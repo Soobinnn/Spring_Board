@@ -19,11 +19,14 @@
     
     <!-- 01. 게시글 전체목록 조회 및 검색 조회까지 -->
 	<select id="listAll" resultType="BoardVO">
-    	SELECT bno, title, content, writer, regdate, viewcnt 
-    	FROM tbl_board
-    	<!-- WHERE절을 include 태그로 삽입 -->
-    	<include refid="search"></include>
-    	ORDER BY bno desc, regdate desc
+    	<!-- 회원권환이 없는 게시글 목록 쿼리
+    SELECT bno, title, content, writer, regdate, viewcnt 
+    FROM tbl_board -->
+    SELECT bno, title, content, b.regdate, viewcnt, user_name AS userName
+    FROM tbl_board b, tbl_member m
+    <!-- WHERE절을 include 태그로 삽입 -->
+    <include refid="search"></include>
+    ORDER BY bno desc, regdate desc
 	</select>
 	
     <!-- 02. 게시글 작성 -->
@@ -32,18 +35,18 @@
           bno, 
           title, 
           content, 
-          writer
+          writer    
         ) VALUES (
           (SELECT NVL(MAX(bno)+1, 1)FROM tbl_board),
           #{title},
           #{content},
-          #{writer}
+          #{writer}   
         )
     </insert>
     <!--03. 게시글 상세보기 조회 -->
     <select id="view" resultType="BoardVO">
-        SELECT * FROM tbl_board 
-        WHERE bno = #{bno}
+        SELECT b.*, user_name as userName from tbl_board b, tbl_member m
+        WHERE bno = #{bno} and b.writer = m.user_id
     </select>
     <!-- 04. 게시글 조회수 증가처리 -->
     <update id="increaseViewcnt">
@@ -66,7 +69,7 @@
      
 	<!-- 07. 게시글 레코드 갯수 -->
 	<select id="countArticle" resultType="int">
-    	SELECT COUNT(*) FROM tbl_board
+    	SELECT COUNT(*) FROM tbl_board b, tbl_member m
     	<!-- WHERE절을 include 태그로 삽입 -->
     	<include refid="search"></include>
 	</select>
@@ -77,13 +80,20 @@
     	<choose>
        	 <!-- 검색옵션이 전체 검색일 경우 -->
         	<when test="searchOption == 'all'">
-           	 	WHERE writer like '%'||#{keyword}||'%'
-           		OR content like '%'||#{keyword}||'%'
-          	  	OR title like '%'||#{keyword}||'%'
+        	WHERE b.writer = m.user_id
+        	AND
+        	(user_name like '%'||#{keyword}||'%'
+            OR content like '%'||#{keyword}||'%'
+            OR title like '%'||#{keyword}||'%')       	 
         	</when>
+        	<!-- 	WHERE writer like '%'||#{keyword}||'%'
+           		OR content like '%'||#{keyword}||'%'
+          	  	OR title like '%'||#{keyword}||'%' -->
         	<!-- 전체 검색이 아닐 경우 -->
         	<otherwise>
-           		 WHERE ${searchOption} like '%'||#{keyword}||'%'
+           		<!--  WHERE ${searchOption} like '%'||#{keyword}||'%' -->
+           		 WHERE b.writer = m.user_id 
+            	AND ${searchOption} like '%'||#{keyword}||'%'
         	</otherwise>
     	</choose>
 	</sql>
