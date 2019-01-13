@@ -13,8 +13,9 @@ public interface BoardService
     public List<BoardVO> listAll() throws Exception;*/
     
     // 01. 게시글 전체 목록 ==> 검색옵션, 키워드 매개변수 추가
-    public List<BoardVO> listAll(String searchOption, String keyword) throws Exception;
-    
+	/*  public List<BoardVO> listAll(String searchOption, String keyword) throws Exception;*/
+	// 01. 게시글 전체 목록 -> 페이징 추가
+	public List<BoardVO> listAll(int start, int end, String searchOption, String keyword) throws Exception;
     // 02. 게시글 작성
     public void insert(BoardVO vo) throws Exception;
     

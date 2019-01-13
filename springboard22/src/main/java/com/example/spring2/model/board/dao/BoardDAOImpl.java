@@ -25,7 +25,7 @@ public class BoardDAOImpl implements BoardDAO
        return SqlSession.selectList("board.listAll"); // BoardVO
    }*/
    // 01. 게시글 전체 목록
-   @Override
+   /*@Override
    public List<BoardVO> listAll(String searchOption, String keyword) throws Exception 
    {
 	   // 검색옵션, 키워드 맵에 저장
@@ -34,7 +34,21 @@ public class BoardDAOImpl implements BoardDAO
 	   map.put("keyword", keyword);
 	   
 	   return SqlSession.selectList("board.listAll", map);// vo
+   }*/
+   // 01. 게시글 전체 목록
+   @Override
+   public List<BoardVO> listAll(int start, int end, String searchOption, String keyword) throws Exception 
+   {
+       // 검색옵션, 키워드 맵에 저장
+       Map<String, Object> map = new HashMap<String, Object>();
+       map.put("searchOption", searchOption);
+       map.put("keyword", keyword);
+       // BETWEEN #{start}, #{end}에 입력될 값을 맵에 
+       map.put("start", start);
+       map.put("end", end);
+       return SqlSession.selectList("board.listAll", map);
    }
+
    // 02. 게시글 작성
    @Override
    public void insert(BoardVO vo) throws Exception 
@@ -59,8 +73,8 @@ public class BoardDAOImpl implements BoardDAO
    public void updateArticle(BoardVO vo) throws Exception 
    {
        SqlSession.update("board.updateArticle", vo);
-
    }
+   
    // 06. 게시글 삭제
    @Override
    public void deleteArticle(int bno) throws Exception 

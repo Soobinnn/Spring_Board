@@ -23,10 +23,15 @@ public class BoardServiceImpl implements BoardService
     }*/
     
     // 01. 게시글 전체 목록 boardDAO.listAll메서드 호출
-    @Override
+    /*  @Override
     public List<BoardVO> listAll(String searchOption, String keyword) throws Exception 
     {
         return boardDao.listAll(searchOption, keyword);
+    }*/
+    // 01. 게시글 전체 목록 - 페이징 추가
+    @Override
+    public List<BoardVO> listAll(int start, int end, String searchOption, String keyword) throws Exception {
+        return boardDao.listAll(start, end, searchOption, keyword);
     }
     
     // 02. 게시글쓰기
