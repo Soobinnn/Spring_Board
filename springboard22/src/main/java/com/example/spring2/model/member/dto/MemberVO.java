@@ -10,8 +10,23 @@ public class MemberVO
     private String userEmail; 
     private Date userRegdate; // java.sql.Date
     private Date userUpdatedate;
+    private String authkey;
+    private int authstatus;
+    private String userAuthCode;
     
-    // Getter/Setter
+    public String getUserAuthCode() {
+		return userAuthCode;
+	}
+	public void setUserAuthCode(String userAuthCode) {
+		this.userAuthCode = userAuthCode;
+	}
+	public int getAuthstatus() {
+		return authstatus;
+	}
+	public void setAuthstatus(int authstatus) {
+		this.authstatus = authstatus;
+	}
+	// Getter/Setter
     public String getUserId() {
         return userId;
     }
@@ -49,7 +64,13 @@ public class MemberVO
         this.userUpdatedate = userUpdatedate;
     }
     
-    // toString()
+    public String getAuthkey() {
+		return authkey;
+	}
+	public void setAuthkey(String authkey) {
+		this.authkey = authkey;
+	}
+	// toString()
     @Override
     public String toString() 
     {

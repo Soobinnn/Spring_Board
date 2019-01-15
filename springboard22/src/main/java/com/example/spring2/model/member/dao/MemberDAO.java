@@ -11,7 +11,7 @@ public interface MemberDAO
 {
    // 01. 회원 목록 
    public List<MemberVO> memberList();
-   // 02. 회원 입력
+   // 02. 회원 입력 ++ 이메일 인증
    public void insertMember(MemberVO vo);
    // 03. 회원 정보 상세보기
    public MemberVO viewMember(String userId);
@@ -28,4 +28,10 @@ public interface MemberDAO
    public MemberVO viewlogin(MemberVO vo);
    // 09. 회원 로그아웃
    public void logout(HttpSession session);
+   
+   //인증키
+   public void createAuthKey(String user_email, String user_authCode) throws Exception; 
+   
+   public void userAuth(String user_email) throws Exception;
+   
 }

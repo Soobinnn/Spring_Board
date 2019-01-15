@@ -12,8 +12,15 @@ public class BoardVO
     private Date regdate;       // 게시글 작성일자 util.Date
     private int viewcnt;        // 게시글 조회수
     private String userName;    // 게시글 작성자
+    private int recnt;           // **게시글 댓글의 수 추가
     
-    // Getter/Setter
+    public int getRecnt() {
+		return recnt;
+	}
+	public void setRecnt(int recnt) {
+		this.recnt = recnt;
+	}
+	// Getter/Setter
     public int getBno() {
         return bno;
     }

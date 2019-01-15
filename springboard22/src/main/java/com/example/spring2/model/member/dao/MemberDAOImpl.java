@@ -36,6 +36,10 @@ public class MemberDAOImpl implements MemberDAO
    @Override
    public void insertMember(MemberVO vo) 
    {
+	   System.out.println(vo.getUserId());
+	   System.out.println(vo.getUserEmail());
+	   System.out.println(vo.getUserPw());
+	   System.out.println(vo.getUserName());
        sqlSession.insert("member.insertMember", vo);
    }
    
@@ -96,4 +100,21 @@ public class MemberDAOImpl implements MemberDAO
    {
    }
    
+   @Override
+   public void createAuthKey(String user_email, String user_authCode) throws Exception 
+   {
+   		// TODO Auto-generated method stub
+   	MemberVO vo = new MemberVO();
+   	
+   	vo.setUserAuthCode(user_authCode);
+   	vo.setUserEmail(user_email);
+
+   	sqlSession.selectOne("member.createAuthKey", vo);
+   }
+   @Override
+   public void userAuth(String user_email) throws Exception 
+   {
+   		// TODO Auto-generated method stub
+   		sqlSession.update("member.userAuth", user_email);
+   }
 }

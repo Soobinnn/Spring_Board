@@ -10,8 +10,8 @@ public interface MemberService
 {
    //01. 회원 목록 
    public List<MemberVO> memberList();
-   //02. 회원 입력
-   public void insertMember(MemberVO vo);
+   //02. 회원 입력 ++ 이메일 추가
+   public void insertMember(MemberVO vo) throws Exception;
    //03. 회원 정보 상세보기
    public MemberVO viewMember(String userId);
    //04. 회원정보 수정
@@ -27,4 +27,7 @@ public interface MemberService
    public MemberVO viewlogin(MemberVO vo);
    // 09. 회원 로그아웃
    public void logout(HttpSession session);
+   
+   public void userAuth(String userEmail) throws Exception;
+   
 }

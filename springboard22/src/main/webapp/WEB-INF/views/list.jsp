@@ -56,7 +56,15 @@ ${map.count}개의 게시물이 있습니다.
         <td>${row.bno}</td>
         <%-- <td><a href="${path}/board/view.do?bno=${row.bno}">${row.title}</a></td> --%>
         <!-- ** 게시글 상세보기 페이지로 이동시 게시글 목록페이지에 있는 검색조건, 키워드, 현재페이지 값을 유지하기 위해 -->
-        <td><a href="${path}/board/view.do?bno=${row.bno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">${row.title}</a></td>        
+        <td>
+        	<a href="${path}/board/view.do?bno=${row.bno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">${row.title}
+        		<!-- ** 댓글이 있으면 게시글 이름 옆에 출력하기 -->
+                 <c:if test="${row.recnt > 0}">
+                 <span style="color: red;">(${row.recnt})
+                 </span>
+                 </c:if>
+        	</a>
+        </td>        
         <%-- <td>${row.writer}</td> --%>
         <td>${row.userName}</td>
         <td>
@@ -80,8 +88,8 @@ ${map.count}개의 게시물이 있습니다.
                 
           <!-- **하나의 블럭에서 반복문 수행 시작페이지부터 끝페이지까지 -->
           <c:forEach var="num" begin="${map.boardPager.blockBegin}" end="${map.boardPager.blockEnd}">
-           <!-- **현재페이지이면 하이퍼링크 제거 -->
-           <c:choose>
+           		<!-- **현재페이지이면 하이퍼링크 제거 -->
+           		<c:choose>
                         <c:when test="${num == map.boardPager.curPage}">
                             <span style="color: red">${num}</span>&nbsp;
                         </c:when>

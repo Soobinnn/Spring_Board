@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,7 +54,7 @@ public class MemberController
    // * 폼에서 입력한 데이터를 받아오는 법 3가지 
    //public String memberInsert(HttpServlet request){
    //public String memberInsert(String userId, String userPw, String userName, String userEmail){
-   public String memberInsert(@ModelAttribute MemberVO vo)
+   public String memberInsert(@ModelAttribute MemberVO vo) throws Exception
    {
        // 테이블에 레코드 입력
        memberService.insertMember(vo);
@@ -159,4 +160,32 @@ public class MemberController
        mav.addObject("msg", "logout");
        return mav;
    }
+   @RequestMapping(value = "member/emailConfirm", method = RequestMethod.GET)
+   public String emailConfirm(String userEmail, Model model) throws Exception 
+   { 	// 이메일인증
+	   	System.out.println(userEmail);
+   		memberService.userAuth(userEmail);
+   		model.addAttribute("user_email", userEmail);
+   		return "emailConfirm";
+   }
+   /*   @RequestMapping(value="member/joinPost", method=RequestMethod.POST)
+	public String joinPost(@ModelAttribute("uVO") MemberVO uVO) throws Exception 
+   {
+		logger.info("currnent join member: " + uVO.toString());
+		memberService.create(uVO);
+		
+		return "joinPost";
+	}*/
+   /*@RequestMapping(value="member/joinConfirm", method=RequestMethod.GET)
+	public String emailConfirm(@ModelAttribute("uVO") MemberVO uVO, Model model) throws Exception 
+   {
+		logger.info(uVO.getUserEmail() + ": auth confirmed");
+		uVO.setAuthstatus(1);	// authstatus를 1로,, 권한 업데이트
+		memberService.updateAuthstatus(uVO);
+		
+		model.addAttribute("auth_check", 1);
+		
+		return "joinPost";
+	}*/
+   
 }

@@ -22,12 +22,16 @@
     	<!-- 회원권환이 없는 게시글 목록 쿼리
     SELECT bno, title, content, writer, regdate, viewcnt 
     FROM tbl_board -->
+    <!-- SELECT bno, title, content, b.regdate, viewcnt, user_name AS userName
+    FROM tbl_board b, tbl_member m -->
     <include refid="pagingHeader"></include>
-    SELECT bno, title, content, b.regdate, viewcnt, user_name AS userName
+    SELECT ROWNUM, bno, title, content, b.regdate, viewcnt, user_name AS userName, 
+     <!-- ** 댓글숫자표시 -->
+     (SELECT COUNT(*) FROM tbl_reply WHERE bno=b.bno) AS recnt
     FROM tbl_board b, tbl_member m
     <!-- WHERE절을 include 태그로 삽입 -->
     <include refid="search"></include>
-    ORDER BY bno desc, regdate desc
+    ORDER BY bno desc, b.regdate DESC 
      <include refid="pagingFooter"></include>   
 	</select>
 	
@@ -47,8 +51,9 @@
     </insert>
     <!--03. 게시글 상세보기 조회 -->
     <select id="view" resultType="BoardVO">
-        SELECT b.*, user_name as userName from tbl_board b, tbl_member m
-        WHERE bno = #{bno} and b.writer = m.user_id
+        SELECT b.*, user_name as userName 
+        from tbl_board b, tbl_member m
+        WHERE bno = #{bno} and b.writer = m.user_id 
     </select>
     <!-- 04. 게시글 조회수 증가처리 -->
     <update id="increaseViewcnt">

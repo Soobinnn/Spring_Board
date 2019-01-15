@@ -106,8 +106,12 @@ public class BoardController
     // @RequestParam : get/post방식으로 전달된 변수 1개
     // HttpSession 세션객체
     @RequestMapping(value="view.do", method=RequestMethod.GET)
-    public ModelAndView view(@RequestParam int bno, HttpSession session) throws Exception
+    public ModelAndView view(@RequestParam int bno, HttpSession session,@RequestParam int curPage) throws Exception
     {
+    	BoardPager boardPager = new BoardPager(curPage);
+    	
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	map.put("boardPager", boardPager);
         // 조회수 증가 처리
         boardService.increaseViewcnt(bno, session);
         // 모델(데이터)+뷰(화면)를 함께 전달하는 객체
@@ -116,6 +120,7 @@ public class BoardController
         mav.setViewName("view");
         // 뷰에 전달할 데이터
         mav.addObject("dto", boardService.view(bno));
+        mav.addObject("map", map); // 맵에 저장된 데이터를 mav에 저장
         return mav;
     }
    

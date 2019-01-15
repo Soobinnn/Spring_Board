@@ -71,4 +71,11 @@
         FROM tbl_member
         WHERE user_id = #{userId} AND user_pw = #{userPw}
     </select>
+    <!-- 이메일 인증 -->
+    <update id="createAuthKey">
+	update tbl_member set user_authcode = #{userAuthCode} where user_email = #{userEmail}
+	</update> 
+	<update id="userAuth">
+	update tbl_member set AUTHSTATUS = 1 where user_email = #{userEmail}
+	</update>
 </mapper>

@@ -33,6 +33,12 @@ public class BoardPager
         setTotBlock(); // 전체 페이지 블록 갯수 계산
         setBlockRange(); // 페이지 블록의 시작, 끝 번호 계산
     }
+    // 생성자
+    // ( 현재 페이지 번호)
+    public BoardPager(int curPage)
+    {
+        this.curPage = curPage; // 현재 페이지 설정
+    }
     
     public void setBlockRange()
     {
