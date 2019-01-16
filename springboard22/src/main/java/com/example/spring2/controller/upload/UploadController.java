@@ -118,10 +118,13 @@ public class UploadController
             // InputStream 생성
             in = new FileInputStream(uploadPath + fileName);
             // 이미지 파일이면
-            if (mType != null) { 
+            if (mType != null) 
+            { 
                 headers.setContentType(mType);
             // 이미지가 아니면
-            } else { 
+            } 
+            else 
+            { 
                 fileName = fileName.substring(fileName.indexOf("_") + 1);
                 // 다운로드용 컨텐트 타입
                 headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -133,11 +136,15 @@ public class UploadController
             }
             // 바이트배열, 헤더, HTTP상태코드
             entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             e.printStackTrace();
             // HTTP상태 코드()
             entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
-        } finally {
+        } 
+        finally 
+        {
             in.close(); //스트림 닫기
         }
         return entity;
@@ -154,7 +161,8 @@ public class UploadController
         MediaType mType = MediaUtils.getMediaType(formatName);
         // 이미지의 경우(썸네일 + 원본파일 삭제), 이미지가 아니면 원본파일만 삭제
         // 이미지 파일이면
-        if (mType != null) {
+        if (mType != null) 
+        {
             // 썸네일 이미지 파일 추출
             String front = fileName.substring(0, 12);
             String end = fileName.substring(14);

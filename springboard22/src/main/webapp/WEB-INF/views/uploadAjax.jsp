@@ -97,21 +97,24 @@
      
     });
     
- // 원본파일이름을 목록에 출력하기 위해
+ 	// 원본파일이름을 목록에 출력하기 위해
     function getOriginalName(fileName) 
- {
+ 	{
         // 이미지 파일이면
-        if(checkImageType(fileName)) {
+        if(checkImageType(fileName)) 
+        {
             return; // 함수종료
         }
         // uuid를 제외한 원래 파일 이름을 리턴
         var idx = fileName.indexOf("_")+1;
         return fileName.substr(idx);
     }
- // 이미지파일 링크 - 클릭하면 원본 이미지를 출력해주기 위해
-    function getImageLink(fileName) {
+ 	// 이미지파일 링크 - 클릭하면 원본 이미지를 출력해주기 위해
+    function getImageLink(fileName) 
+ 	{
         // 이미지파일이 아니면
-        if(!checkImageType(fileName)) { 
+        if(!checkImageType(fileName)) 
+        { 
             return; // 함수 종료 
         }
         // 이미지 파일이면(썸네일이 아닌 원본이미지를 가져오기 위해)
@@ -123,8 +126,9 @@
         // 원본 파일명 - /2017/03/09/43fc37cc-021b-4eec-8322-bc5c8162863d_spring001.png
         return front+end; // 디렉토리를 포함한 원본파일명을 리턴
     }
- // 이미지파일 형식을 체크하기 위해
-    function checkImageType(fileName) {
+ 	// 이미지파일 형식을 체크하기 위해
+    function checkImageType(fileName) 
+ 	{
         // i : ignore case(대소문자 무관)
         var pattern = /jpg|gif|png|jpeg/i; // 정규표현식
         return fileName.match(pattern); // 규칙이 맞으면 true

@@ -129,8 +129,10 @@ public class BoardController
     // 04. 게시글 수정
     // 폼에서 입력한 내용들은 @ModelAttribute BoardVO vo로 전달됨
     @RequestMapping(value="update.do", method=RequestMethod.POST)
-    public String update(@ModelAttribute BoardVO vo) throws Exception
+    public String update(@ModelAttribute BoardVO vo, HttpSession session) throws Exception
     {
+    	String _writer = (String) session.getAttribute("userId");
+    	vo.setWriter(_writer);
         boardService.updateArticle(vo);
         return "redirect:list.do";
     }
